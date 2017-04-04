@@ -1,10 +1,16 @@
+/*
+ *  https://github.com/josnidhin/Android-Camera-Example에 있는 코드를 수정했습니다.
+*/
+
 package com.tistory.webnautes.androidcameraexample;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
@@ -15,6 +21,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceView;
@@ -35,87 +46,14 @@ import java.io.IOException;
 
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     Preview preview;
-    Button buttonClick;
     Camera camera;
-    Activity act;
     Context ctx;
 
-    
-
-    // Request code for camera
-    private final int CAMERA_REQUEST_CODE = 100;
-
-    // Request code for runtime permissions
-    private final int REQUEST_CODE_STORAGE_PERMS = 321;
-
-    private boolean hasPermissions() {
-        int res = 0;
-        // list all permissions which you want to check are granted or not.
-        String[] permissions = new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        for (String perms : permissions){
-            res = checkCallingOrSelfPermission(perms);
-            if (!(res == PackageManager.PERMISSION_GRANTED)){
-                // it return false because your app dosen't have permissions.
-                return false;
-            }
-
-        }
-        // it return true, your app has permissions.
-        return true;
-    }
-
-    private void requestNecessaryPermissions() {
-        // make array of permissions which you want to ask from user.
-        String[] permissions = new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // have arry for permissions to requestPermissions method.
-            // and also send unique Request code.
-            requestPermissions(permissions, REQUEST_CODE_STORAGE_PERMS);
-        }
-    }
-
-    /* when user grant or deny permission then your app will check in
-      onRequestPermissionsReqult about user's response. */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grandResults) {
-        // this boolean will tell us that user granted permission or not.
-        boolean allowed = true;
-        switch (requestCode) {
-            case REQUEST_CODE_STORAGE_PERMS:
-                for (int res : grandResults) {
-                    // if user granted all required permissions then 'allowed' will return true.
-                    allowed = allowed && (res == PackageManager.PERMISSION_GRANTED);
-                    Toast.makeText(this, "Camera permission granted", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                // if user denied then 'allowed' return false
-                Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
-                allowed = false;
-                break;
-        }
-        if (allowed) {
-            // if user granted permissions then do your work.
-            //startCamera();
-            doRestart(this);
-        }
-        else {
-            // else give any custom waring message.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                    Toast.makeText(MainActivity.this, "Camera Permissions denied", Toast.LENGTH_SHORT).show();
-                }
-                else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                    Toast.makeText(MainActivity.this, "Storage Permissions denied", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        }
-    }
+    private final static int PERMISSIONS_REQUEST_CODE = 100;
+    private AppCompatActivity mActivity;
 
 
     public static void doRestart(Context c) {
@@ -166,13 +104,14 @@ public class MainActivity extends Activity {
             ((FrameLayout) findViewById(R.id.layout)).addView(preview);
             preview.setKeepScreenOn(true);
 
+            /* 프리뷰 화면 눌렀을 때  사진을 찍음
             preview.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View arg0) {
                     camera.takePicture(shutterCallback, rawCallback, jpegCallback);
                 }
-            });
+            });*/
         }
 
         preview.setCamera(null);
@@ -195,7 +134,6 @@ public class MainActivity extends Activity {
                 // picture image orientation
                 params.setRotation(setCameraDisplayOrientation(this, CAMERA_FACING, camera));
                 camera.startPreview();
-                Toast.makeText(this, "camera start", Toast.LENGTH_LONG).show();
 
             } catch (RuntimeException ex) {
                 Toast.makeText(ctx, "camera_not_found " + ex.getMessage().toString(), Toast.LENGTH_LONG).show();
@@ -211,20 +149,45 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ctx = this;
-        act = this;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        mActivity = this;
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.activity_main);
 
+        Button button = (Button)findViewById(R.id.btnCapture);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+            }
+        });
+
+
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            if (!hasPermissions()) {
-                // your app doesn't have permissions, ask for them.
-                requestNecessaryPermissions();
-            } else {
-                // your app already have permissions allowed.
-                // do what you want.
-                //startCamera();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //API 23 이상이면 런타임 퍼미션 처리 필요
+
+                int hasCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+                int hasWriteExternalStoragePermission =
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                if ( hasCameraPermission == PackageManager.PERMISSION_GRANTED
+                        && hasWriteExternalStoragePermission == PackageManager.PERMISSION_GRANTED ){
+                    ;//이미 퍼미션을 가지고 있음
+                }
+                else {
+                    //퍼미션 요청
+                    ActivityCompat.requestPermissions( this,
+                            new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            PERMISSIONS_REQUEST_CODE);
+                }
+            }
+            else{
+                ;
             }
 
 
@@ -273,13 +236,13 @@ public class MainActivity extends Activity {
 
     ShutterCallback shutterCallback = new ShutterCallback() {
         public void onShutter() {
-            //			 Log.d(TAG, "onShutter'd");
+            			 Log.d(TAG, "onShutter'd");
         }
     };
 
         PictureCallback rawCallback = new PictureCallback() {
         public void onPictureTaken(byte[] data, Camera camera) {
-            //			 Log.d(TAG, "onPictureTaken - raw");
+            			 Log.d(TAG, "onPictureTaken - raw");
         }
     };
 
@@ -359,4 +322,103 @@ public class MainActivity extends Activity {
 
         return result;
     }
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grandResults) {
+
+        if ( requestCode == PERMISSIONS_REQUEST_CODE && grandResults.length > 0) {
+
+            int hasCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+            int hasWriteExternalStoragePermission =
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if ( hasCameraPermission == PackageManager.PERMISSION_GRANTED
+                    && hasWriteExternalStoragePermission == PackageManager.PERMISSION_GRANTED ){
+
+                //이미 퍼미션을 가지고 있음
+                doRestart(this);
+            }
+            else{
+                checkPermissions();
+            }
+        }
+
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkPermissions() {
+        int hasCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        int hasWriteExternalStoragePermission =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        boolean cameraRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
+        boolean writeExternalStorageRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+
+        if ( (hasCameraPermission == PackageManager.PERMISSION_DENIED && cameraRationale)
+             || (hasWriteExternalStoragePermission== PackageManager.PERMISSION_DENIED && writeExternalStorageRationale))
+            showDialogForPermission("앱을 실행하려면 퍼미션을 허가하셔야합니다.");
+
+        else if ( (hasCameraPermission == PackageManager.PERMISSION_DENIED && !cameraRationale)
+                || (hasWriteExternalStoragePermission== PackageManager.PERMISSION_DENIED && !writeExternalStorageRationale))
+            showDialogForPermissionSetting("퍼미션 거부 + Don't ask again(다시 묻지 않음) " +
+                    "체크 박스를 설정한 경우로 설정에서 퍼미션 허가해야합니다.");
+
+        else if ( hasCameraPermission == PackageManager.PERMISSION_GRANTED
+                || hasWriteExternalStoragePermission== PackageManager.PERMISSION_GRANTED ) {
+            doRestart(this);
+        }
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void showDialogForPermission(String msg) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("알림");
+        builder.setMessage(msg);
+        builder.setCancelable(false);
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //퍼미션 요청
+                ActivityCompat.requestPermissions( MainActivity.this,
+                        new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSIONS_REQUEST_CODE);
+            }
+        });
+
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
+    private void showDialogForPermissionSetting(String msg) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("알림");
+        builder.setMessage(msg);
+        builder.setCancelable(true);
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + mActivity.getPackageName()));
+                myAppSettings.addCategory(Intent.CATEGORY_DEFAULT);
+                myAppSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mActivity.startActivity(myAppSettings);
+            }
+        });
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
 }
