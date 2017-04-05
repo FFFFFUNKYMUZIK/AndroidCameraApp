@@ -13,6 +13,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
@@ -22,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -38,6 +42,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     Context ctx;
 
     private final static int PERMISSIONS_REQUEST_CODE = 100;
+    // Camera.CameraInfo.CAMERA_FACING_FRONT or Camera.CameraInfo.CAMERA_FACING_BACK
+    private final static int CAMERA_FACING = Camera.CameraInfo.CAMERA_FACING_BACK;
     private AppCompatActivity mActivity;
 
 
@@ -72,18 +79,21 @@ public class MainActivity extends AppCompatActivity {
                     );
                     if (mStartActivity != null) {
                         mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        //create a pending intent so the application is restarted after System.exit(0) was called.
+                        //create a pending intent so the application is restarted
+                        // after System.exit(0) was called.
                         // We use an AlarmManager to call this intent in 100ms
                         int mPendingIntentId = 223344;
                         PendingIntent mPendingIntent = PendingIntent
                                 .getActivity(c, mPendingIntentId, mStartActivity,
                                         PendingIntent.FLAG_CANCEL_CURRENT);
-                        AlarmManager mgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+                        AlarmManager mgr =
+                                (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
                         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
                         //kill the application
                         System.exit(0);
                     } else {
-                        Log.e(TAG, "Was not able to restart application, mStartActivity null");
+                        Log.e(TAG, "Was not able to restart application, " +
+                                "mStartActivity null");
                     }
                 } else {
                     Log.e(TAG, "Was not able to restart application, PM null");
@@ -100,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
         if ( preview == null ) {
             preview = new Preview(this, (SurfaceView) findViewById(R.id.surfaceView));
-            preview.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            preview.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT));
             ((FrameLayout) findViewById(R.id.layout)).addView(preview);
             preview.setKeepScreenOn(true);
 
@@ -124,11 +135,10 @@ public class MainActivity extends AppCompatActivity {
         if (numCams > 0) {
             try {
 
-                // Camera.CameraInfo.CAMERA_FACING_FRONT or Camera.CameraInfo.CAMERA_FACING_BACK
-                int CAMERA_FACING = Camera.CameraInfo.CAMERA_FACING_BACK;
                 camera = Camera.open(CAMERA_FACING);
                 // camera orientation
-                camera.setDisplayOrientation(setCameraDisplayOrientation(this, CAMERA_FACING, camera));
+                camera.setDisplayOrientation(setCameraDisplayOrientation(this, CAMERA_FACING,
+                        camera));
                 // get Camera parameters
                 Camera.Parameters params = camera.getParameters();
                 // picture image orientation
@@ -136,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
                 camera.startPreview();
 
             } catch (RuntimeException ex) {
-                Toast.makeText(ctx, "camera_not_found " + ex.getMessage().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "camera_not_found " + ex.getMessage().toString(),
+                        Toast.LENGTH_LONG).show();
                 Log.d(TAG, "camera_not_found " + ex.getMessage().toString());
             }
         }
@@ -151,8 +162,10 @@ public class MainActivity extends AppCompatActivity {
         ctx = this;
         mActivity = this;
 
+        //상태바 없애기
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -169,20 +182,24 @@ public class MainActivity extends AppCompatActivity {
 
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //API 23 이상이면 런타임 퍼미션 처리 필요
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //API 23 이상이면
+                                                                    // 런타임 퍼미션 처리 필요
 
-                int hasCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+                int hasCameraPermission = ContextCompat.checkSelfPermission(this,
+                                                Manifest.permission.CAMERA);
                 int hasWriteExternalStoragePermission =
-                        ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        ContextCompat.checkSelfPermission(this,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
                 if ( hasCameraPermission == PackageManager.PERMISSION_GRANTED
-                        && hasWriteExternalStoragePermission == PackageManager.PERMISSION_GRANTED ){
+                        && hasWriteExternalStoragePermission==PackageManager.PERMISSION_GRANTED){
                     ;//이미 퍼미션을 가지고 있음
                 }
                 else {
                     //퍼미션 요청
                     ActivityCompat.requestPermissions( this,
-                            new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            new String[]{Manifest.permission.CAMERA,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             PERMISSIONS_REQUEST_CODE);
                 }
             }
@@ -192,7 +209,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         } else {
-            Toast.makeText(MainActivity.this, "Camera not supported", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Camera not supported",
+                    Toast.LENGTH_LONG).show();
         }
 
 
@@ -246,9 +264,37 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
+    //참고 : http://stackoverflow.com/q/37135675
     PictureCallback jpegCallback = new PictureCallback() {
         public void onPictureTaken(byte[] data, Camera camera) {
-            new SaveImageTask().execute(data);
+
+            //이미지의 너비와 높이 결정
+            int w = camera.getParameters().getPictureSize().width;
+            int h = camera.getParameters().getPictureSize().height;
+
+            int orientation = setCameraDisplayOrientation(MainActivity.this,
+                    CAMERA_FACING, camera);
+
+            //byte array를 bitmap으로 변환
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap bitmap = BitmapFactory.decodeByteArray( data, 0, data.length, options);
+            //int w = bitmap.getWidth();
+            //int h = bitmap.getHeight();
+
+            //이미지를 디바이스 방향으로 회전
+            Matrix matrix = new Matrix();
+            matrix.postRotate(orientation);
+            bitmap =  Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+
+            //bitmap을 byte array로 변환
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] currentData = stream.toByteArray();
+
+            //파일로 저장
+            new SaveImageTask().execute(currentData);
             resetCam();
             Log.d(TAG, "onPictureTaken - jpeg");
         }
@@ -274,7 +320,8 @@ public class MainActivity extends AppCompatActivity {
                 outStream.flush();
                 outStream.close();
 
-                Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length + " to " + outFile.getAbsolutePath());
+                Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length + " to "
+                        + outFile.getAbsolutePath());
 
                 refreshGallery(outFile);
             } catch (FileNotFoundException e) {
@@ -291,7 +338,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      *
      * @param activity
-     * @param cameraId  Camera.CameraInfo.CAMERA_FACING_FRONT, Camera.CameraInfo.CAMERA_FACING_BACK
+     * @param cameraId  Camera.CameraInfo.CAMERA_FACING_FRONT,
+     *                    Camera.CameraInfo.CAMERA_FACING_BACK
      * @param camera
      *
      * Camera Orientation
@@ -326,13 +374,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grandResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grandResults) {
 
         if ( requestCode == PERMISSIONS_REQUEST_CODE && grandResults.length > 0) {
 
-            int hasCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+            int hasCameraPermission = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.CAMERA);
             int hasWriteExternalStoragePermission =
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
             if ( hasCameraPermission == PackageManager.PERMISSION_GRANTED
                     && hasWriteExternalStoragePermission == PackageManager.PERMISSION_GRANTED ){
@@ -350,20 +402,27 @@ public class MainActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.M)
     private void checkPermissions() {
-        int hasCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        int hasCameraPermission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
         int hasWriteExternalStoragePermission =
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        boolean cameraRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA);
-        boolean writeExternalStorageRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        boolean cameraRationale = ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.CAMERA);
+        boolean writeExternalStorageRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
 
         if ( (hasCameraPermission == PackageManager.PERMISSION_DENIED && cameraRationale)
-             || (hasWriteExternalStoragePermission== PackageManager.PERMISSION_DENIED && writeExternalStorageRationale))
+             || (hasWriteExternalStoragePermission== PackageManager.PERMISSION_DENIED
+                && writeExternalStorageRationale))
             showDialogForPermission("앱을 실행하려면 퍼미션을 허가하셔야합니다.");
 
         else if ( (hasCameraPermission == PackageManager.PERMISSION_DENIED && !cameraRationale)
-                || (hasWriteExternalStoragePermission== PackageManager.PERMISSION_DENIED && !writeExternalStorageRationale))
+                || (hasWriteExternalStoragePermission== PackageManager.PERMISSION_DENIED
+                && !writeExternalStorageRationale))
             showDialogForPermissionSetting("퍼미션 거부 + Don't ask again(다시 묻지 않음) " +
                     "체크 박스를 설정한 경우로 설정에서 퍼미션 허가해야합니다.");
 
@@ -385,7 +444,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int id) {
                 //퍼미션 요청
                 ActivityCompat.requestPermissions( MainActivity.this,
-                        new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        new String[]{Manifest.permission.CAMERA,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         PERMISSIONS_REQUEST_CODE);
             }
         });
@@ -407,7 +467,8 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + mActivity.getPackageName()));
+                Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.parse("package:" + mActivity.getPackageName()));
                 myAppSettings.addCategory(Intent.CATEGORY_DEFAULT);
                 myAppSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mActivity.startActivity(myAppSettings);
@@ -420,5 +481,7 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
+
+
 
 }
