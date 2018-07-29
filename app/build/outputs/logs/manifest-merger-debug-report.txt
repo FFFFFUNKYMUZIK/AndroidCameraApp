@@ -1,0 +1,126 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\a432c5095f7139e353cf06e133365bfc\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\cb85cb28f9a513363b33948a74d159ff\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\6b047cc7af94418e8ec9c4ebd8b6b240\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\7b6970885212c49e566e1ecf3d4890b0\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\60cd5913e92470c387047ced734c2550\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\04303c70e55b8cbb8dfaa49168a590a2\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\593d6862c073a081de98da48b395fe40\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\8e74b898ee08a11a1515104ef6ac5084\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\6ba2456a14db173d21945c8db59726da\AndroidManifest.xml:17:1-27:12
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+	package
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:3:11-63
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:1-26:12
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:2:11-69
+uses-feature#android.hardware.camera
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:6:5-60
+	android:name
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:6:19-57
+uses-permission#android.permission.CAMERA
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:7:5-65
+	android:name
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:7:22-62
+uses-permission#android.hardware.camera.autofocus
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:8:5-73
+	android:name
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:8:22-70
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:9:5-81
+	android:name
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:9:22-78
+application
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:11:5-24:19
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\a432c5095f7139e353cf06e133365bfc\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\a432c5095f7139e353cf06e133365bfc\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\cb85cb28f9a513363b33948a74d159ff\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\cb85cb28f9a513363b33948a74d159ff\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\6b047cc7af94418e8ec9c4ebd8b6b240\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\6b047cc7af94418e8ec9c4ebd8b6b240\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\7b6970885212c49e566e1ecf3d4890b0\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\7b6970885212c49e566e1ecf3d4890b0\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\60cd5913e92470c387047ced734c2550\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\60cd5913e92470c387047ced734c2550\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\04303c70e55b8cbb8dfaa49168a590a2\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\04303c70e55b8cbb8dfaa49168a590a2\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\593d6862c073a081de98da48b395fe40\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\593d6862c073a081de98da48b395fe40\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\8e74b898ee08a11a1515104ef6ac5084\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\8e74b898ee08a11a1515104ef6ac5084\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\6ba2456a14db173d21945c8db59726da\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\6ba2456a14db173d21945c8db59726da\AndroidManifest.xml:25:5-20
+	android:supportsRtl
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:15:9-35
+	android:label
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:14:9-41
+	android:icon
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:13:9-43
+	android:allowBackup
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:12:9-35
+	android:theme
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:16:9-40
+activity#com.tistory.webnautes.androidcameraexample.MainActivity
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:17:9-23:20
+	android:name
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:17:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:18:13-22:29
+action#android.intent.action.MAIN
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:19:17-68
+	android:name
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:19:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:21:17-76
+	android:name
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml:21:27-74
+uses-sdk
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\a432c5095f7139e353cf06e133365bfc\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\a432c5095f7139e353cf06e133365bfc\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\cb85cb28f9a513363b33948a74d159ff\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\cb85cb28f9a513363b33948a74d159ff\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\6b047cc7af94418e8ec9c4ebd8b6b240\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\6b047cc7af94418e8ec9c4ebd8b6b240\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\7b6970885212c49e566e1ecf3d4890b0\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\7b6970885212c49e566e1ecf3d4890b0\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\60cd5913e92470c387047ced734c2550\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\60cd5913e92470c387047ced734c2550\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\04303c70e55b8cbb8dfaa49168a590a2\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\04303c70e55b8cbb8dfaa49168a590a2\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\593d6862c073a081de98da48b395fe40\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\593d6862c073a081de98da48b395fe40\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\8e74b898ee08a11a1515104ef6ac5084\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\8e74b898ee08a11a1515104ef6ac5084\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\6ba2456a14db173d21945c8db59726da\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\6ba2456a14db173d21945c8db59726da\AndroidManifest.xml:21:5-23:58
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.0.1] C:\Users\CJH\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\a432c5095f7139e353cf06e133365bfc\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+		ADDED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Desktop\Projects\Android_examples\gittest_camera\AndroidCameraExample\app\src\main\AndroidManifest.xml

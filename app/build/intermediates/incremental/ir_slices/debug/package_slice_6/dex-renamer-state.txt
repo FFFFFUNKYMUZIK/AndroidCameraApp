@@ -1,0 +1,4 @@
+#Mon Jul 30 00:36:34 KST 2018
+base.0=D\:\\Desktop\\Projects\\Android_examples\\gittest_camera\\AndroidCameraExample\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\6
+path.0=classes.dex
+renamed.0=classes.dex
